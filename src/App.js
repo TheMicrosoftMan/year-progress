@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import "./styles/main.scss";
+import CircleProgressBar from "./components/CircleProgressBar";
 
 const dayOfYear = moment().dayOfYear();
 const daysInYear = moment().isLeapYear() ? 366 : 365;
@@ -14,8 +15,19 @@ const currentSecondsInDay = secondsInMinutes + secondsInHour;
 
 const secondsInDay = 86400;
 
+const getPercent = (value, totalValue) => {
+  return Math.round((value * 100) / totalValue);
+};
+
 function App() {
   const [seconds, setSeconds] = useState(moment().seconds());
+
+  const percentsArr = {
+    year: getPercent(dayOfYear, daysInYear),
+    month: getPercent(currentDay, daysInMonth),
+    day: getPercent(currentSecondsInDay, secondsInDay),
+    minute: getPercent(seconds, 60)
+  };
 
   useEffect(() => {
     const secondsUpdate = setInterval(() => {
@@ -26,35 +38,19 @@ function App() {
     };
   }, []);
 
-  // const radius = 54;
-  // const circumference = 2 * Math.PI * radius;
-  // const percent = Math.round((seconds * 100) / 60) / 100;
-
   return (
     <div className="App">
-      {/* <svg className="circle" width="120" height="120" viewBox="0 0 120 120">
-        <circle
-          cx="60"
-          cy="60"
-          r={radius}
-          fill="none"
-          stroke="#f77a52"
-          strokeWidth="12"
-        />
-        <circle
-          cx="60"
-          cy="60"
-          r={radius}
-          fill="none"
-          stroke="#e6e6e6"
-          strokeWidth="12"
-          strokeDasharray={`${circumference * (1 - percent)} ${circumference}`}
-        />
-      </svg> */}
+      <CircleProgressBar radius={60} percent={percentsArr.year} name="Year" />
+      <CircleProgressBar radius={60} percent={percentsArr.month} name="Month" />
+      <CircleProgressBar radius={60} percent={percentsArr.day} name="Day" />
+      <CircleProgressBar
+        radius={60}
+        percent={percentsArr.minute}
+        name="Minutes"
+      />
       <div className="progress-item">
         <div className="progress-item__head">
-          <span>Year</span>{" "}
-          <span>{`${Math.round((dayOfYear * 100) / daysInYear)}%`}</span>
+          <span>Year</span> <span>{`${percentsArr.year}%`}</span>
         </div>
         <progress
           className="progress-item__progress"
@@ -64,8 +60,7 @@ function App() {
       </div>
       <div className="progress-item">
         <div className="progress-item__head">
-          <span>Month</span>{" "}
-          <span>{`${Math.round((currentDay * 100) / daysInMonth)}%`}</span>
+          <span>Month</span> <span>{`${percentsArr.month}%`}</span>
         </div>
         <progress
           className="progress-item__progress"
@@ -75,8 +70,7 @@ function App() {
       </div>
       <div className="progress-item">
         <div className="progress-item__head">
-          <span>Day</span>{" "}
-          <span>{`${(currentSecondsInDay * 100) / secondsInDay}%`}</span>
+          <span>Day</span> <span>{`${percentsArr.day}%`}</span>
         </div>
         <progress
           className="progress-item__progress"
@@ -86,7 +80,7 @@ function App() {
       </div>
       <div className="progress-item">
         <div className="progress-item__head">
-          <span>Minutes</span> <span>{`${(seconds * 100) / 60}%`}</span>
+          <span>Minutes</span> <span>{`${percentsArr.minute}%`}</span>
         </div>
         <progress
           className="progress-item__progress"
