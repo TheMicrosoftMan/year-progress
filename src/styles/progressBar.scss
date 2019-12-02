@@ -1,0 +1,54 @@
+progress,
+progress[role] {
+  border: none;
+  background-size: auto;
+
+  width: 400px;
+  height: 30px;
+}
+
+progress[role]:after {
+  background-image: none;
+}
+
+progress[role] strong {
+  display: none;
+}
+
+progress,
+progress[role][aria-valuenow] {
+  background: #ffeeee !important;
+}
+
+progress::-webkit-progress-bar {
+  background: #ffeeee;
+}
+
+progress {
+  color: black;
+}
+
+progress::-moz-progress-bar {
+  background: black;
+}
+
+progress::-webkit-progress-value {
+  background: black;
+}
+
+progress[aria-valuenow]:before {
+  background: black;
+}
+
+.progress-item {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    margin-bottom: 5px;
+  }
+}
