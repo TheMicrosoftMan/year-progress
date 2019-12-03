@@ -1,10 +1,10 @@
 progress,
 progress[role] {
-  border: none;
+  border: $progress-bar-borders;
   background-size: auto;
 
-  width: 400px;
-  height: 30px;
+  width: $progress-bar-width;
+  height: $progress-bar-height;
 }
 
 progress[role]:after {
@@ -17,27 +17,27 @@ progress[role] strong {
 
 progress,
 progress[role][aria-valuenow] {
-  background: #ffeeee !important;
+  background: $progress-bar-background-color !important;
 }
 
 progress::-webkit-progress-bar {
-  background: #ffeeee;
+  background: $progress-bar-background-color;
 }
 
 progress {
-  color: black;
+  color: $progress-bar-value-color;
 }
 
 progress::-moz-progress-bar {
-  background: black;
+  background: $progress-bar-value-color;
 }
 
 progress::-webkit-progress-value {
-  background: black;
+  background: $progress-bar-value-color;
 }
 
 progress[aria-valuenow]:before {
-  background: black;
+  background: $progress-bar-value-color;
 }
 
 .progress-item {

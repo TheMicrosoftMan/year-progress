@@ -1,3 +1,11 @@
 .circle {
   transform: rotate(-90deg);
+
+  &__background {
+    stroke: $progress-bar-background-color;
+  }
+
+  &__stroke {
+    stroke: $progress-bar-value-color;
+  }
 }

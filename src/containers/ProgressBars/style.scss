@@ -1,0 +1,26 @@
+.ProgressBars {
+  display: flex;
+  justify-content: center;
+
+  &__container {
+    margin-top: 30px;
+    color: #fff;
+    width: max-content;
+    max-width: 700px;
+    box-sizing: border-box;
+    padding: 30px 30px;
+    @include background-with-opacity();
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .progress-item {
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}

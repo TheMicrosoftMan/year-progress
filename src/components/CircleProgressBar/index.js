@@ -16,7 +16,7 @@ const CircleProgressBar = ({ radius, percent }) => {
         cy={`50%`}
         r={radius}
         fill="none"
-        stroke="#f77a52"
+        className="circle__stroke"
         strokeWidth="10"
       />
       <circle
@@ -24,7 +24,7 @@ const CircleProgressBar = ({ radius, percent }) => {
         cy={`50%`}
         r={radius}
         fill="none"
-        stroke="#e6e6e6"
+        className="circle__background"
         strokeWidth="10"
         strokeDasharray={`${circumference *
           (1 - percent / 100)} ${circumference}`}
