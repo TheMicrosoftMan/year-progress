@@ -3,35 +3,51 @@ import moment from "moment";
 import "./styles/main.scss";
 import CircleProgressBar from "./components/CircleProgressBar";
 
-const dayOfYear = moment().dayOfYear();
-const daysInYear = moment().isLeapYear() ? 366 : 365;
-
-const currentDay = moment().day();
-const daysInMonth = moment().daysInMonth();
-
-const secondsInMinutes = moment().minutes() * 60;
-const secondsInHour = moment().hour() * 3600;
-const currentSecondsInDay = secondsInMinutes + secondsInHour;
-
+const secondsInMinute = 60;
 const secondsInDay = 86400;
+const secondsInMonth = secondsInDay * moment().daysInMonth();
+const daysInYear = moment().isLeapYear() ? 366 : 365;
+const secondsInYear = secondsInDay * daysInYear;
+
+const startDay = moment().startOf("day");
+const startMonth = moment().startOf("month");
+
+const startWorkDay = moment("10:00", "HH:mm");
+const endWorkDay = moment("17:00", "HH:mm");
+const workdayDuration = moment
+  .duration(endWorkDay.diff(startWorkDay))
+  .asSeconds();
+
+const startYear = moment().startOf("year");
 
 const getPercent = (value, totalValue) => {
-  return Math.round((value * 100) / totalValue);
+  return (value * 100) / totalValue;
 };
 
 function App() {
-  const [seconds, setSeconds] = useState(moment().seconds());
+  const [now, setNow] = useState(moment());
+
+  const currentSecondsInYear = moment.duration(now.diff(startYear)).asSeconds();
+  const currentSecondsInMonth = moment
+    .duration(now.diff(startMonth))
+    .asSeconds();
+  const currentSecondsInDay = moment.duration(now.diff(startDay)).asSeconds();
+  const currentSecondsInWorkDay = moment
+    .duration(now.diff(startWorkDay))
+    .asSeconds();
+  const currentSeconds = now.seconds();
 
   const percentsArr = {
-    year: getPercent(dayOfYear, daysInYear),
-    month: getPercent(currentDay, daysInMonth),
-    day: getPercent(currentSecondsInDay, secondsInDay),
-    minute: getPercent(seconds, 60)
+    Year: getPercent(currentSecondsInYear, secondsInYear),
+    Month: getPercent(currentSecondsInMonth, secondsInMonth),
+    Day: getPercent(currentSecondsInDay, secondsInDay),
+    Workday: getPercent(currentSecondsInWorkDay, workdayDuration),
+    Minutes: getPercent(currentSeconds, secondsInMinute)
   };
 
   useEffect(() => {
     const secondsUpdate = setInterval(() => {
-      setSeconds(moment().seconds());
+      setNow(moment());
     }, 1000);
     return () => {
       clearInterval(secondsUpdate);
@@ -40,54 +56,30 @@ function App() {
 
   return (
     <div className="App">
-      <CircleProgressBar radius={60} percent={percentsArr.year} name="Year" />
-      <CircleProgressBar radius={60} percent={percentsArr.month} name="Month" />
-      <CircleProgressBar radius={60} percent={percentsArr.day} name="Day" />
-      <CircleProgressBar
-        radius={60}
-        percent={percentsArr.minute}
-        name="Minutes"
-      />
-      <div className="progress-item">
-        <div className="progress-item__head">
-          <span>Year</span> <span>{`${percentsArr.year}%`}</span>
-        </div>
-        <progress
-          className="progress-item__progress"
-          value={dayOfYear}
-          max={daysInYear}
-        />
-      </div>
-      <div className="progress-item">
-        <div className="progress-item__head">
-          <span>Month</span> <span>{`${percentsArr.month}%`}</span>
-        </div>
-        <progress
-          className="progress-item__progress"
-          value={currentDay}
-          max={daysInMonth}
-        />
-      </div>
-      <div className="progress-item">
-        <div className="progress-item__head">
-          <span>Day</span> <span>{`${percentsArr.day}%`}</span>
-        </div>
-        <progress
-          className="progress-item__progress"
-          value={currentSecondsInDay}
-          max={secondsInDay}
-        />
-      </div>
-      <div className="progress-item">
-        <div className="progress-item__head">
-          <span>Minutes</span> <span>{`${percentsArr.minute}%`}</span>
-        </div>
-        <progress
-          className="progress-item__progress"
-          value={seconds}
-          max={60}
-        />
-      </div>
+      {Object.keys(percentsArr).map((param, index) => {
+        return (
+          <CircleProgressBar
+            radius={60}
+            percent={percentsArr[param]}
+            name={param}
+            key={index}
+          />
+        );
+      })}
+      {Object.keys(percentsArr).map((param, index) => {
+        return (
+          <div className="progress-item" key={index}>
+            <div className="progress-item__head">
+              <span>{param}</span> <span>{`${percentsArr[param]}%`}</span>
+            </div>
+            <progress
+              className="progress-item__progress"
+              value={percentsArr[param]}
+              max={100}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
