@@ -1,5 +1,6 @@
 @import "./variables";
 @import "./mixins";
+@import "./animations";
 @import "./progressBar.scss";
 @import "../components/CircleProgressBar/style.scss";
 @import "../containers/ProgressBars/style.scss";
@@ -21,25 +22,41 @@ code {
 }
 
 .App {
+  display: flex;
+  flex-direction: column;
   position: relative;
   height: 100vh;
 
+  &__background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    @include start-animation();
+  }
+
   .bing-img-desc {
-    position: absolute;
-    bottom: 0;
     display: flex;
     align-items: center;
+    width: auto;
+    max-width: max-content;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    margin: 10px;
+    padding: 20px;
     color: #fff;
     text-decoration: none;
-    box-sizing: border-box;
-    border: 1px solid transparent;
-    padding: 20px;
-    width: max-content;
-    margin: 10px;
-    cursor: pointer;
+    transition: all 0.3s linear;
+    @include start-animation();
+
+    &_text {
+      word-wrap: break-word;
+    }
 
     .bing {
       width: 20px;
+      min-width: 20px;
       margin-right: 10px;
     }
 

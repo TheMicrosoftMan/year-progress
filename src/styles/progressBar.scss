@@ -3,7 +3,7 @@ progress[role] {
   border: $progress-bar-borders;
   background-size: auto;
 
-  width: $progress-bar-width;
+  width: 100%;
   height: $progress-bar-height;
 }
 
@@ -43,7 +43,8 @@ progress[aria-valuenow]:before {
 .progress-item {
   display: flex;
   flex-direction: column;
-  width: max-content;
+  width: 100%;
+  max-width: 400px;
 
   &__head {
     display: flex;

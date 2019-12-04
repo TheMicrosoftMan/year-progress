@@ -23,22 +23,23 @@ const App = () => {
         copyrightlink
       });
     };
-
+    
     fetchImage();
   }, []);
 
   return (
-    <div
-      className="App"
-      style={
-        backgroundImageObj && {
-          background: `url(${backgroundImageObj.imgURL})`,
-          backgroundAttachment: "fixed",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover"
-        }
-      }
-    >
+    <div className="App">
+      {backgroundImageObj && (
+        <div
+          className="App__background"
+          style={{
+            background: `url(${backgroundImageObj.imgURL})`,
+            backgroundAttachment: "fixed",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover"
+          }}
+        />
+      )}
       <ProgressBars />
       {backgroundImageObj && (
         <a
@@ -48,7 +49,7 @@ const App = () => {
           className="bing-img-desc"
         >
           <Bing />
-          {backgroundImageObj.copyrights}
+          <p className="bing-img-desc_text">{backgroundImageObj.copyrights}</p>
         </a>
       )}
     </div>

@@ -1,0 +1,14 @@
+@mixin start-animation() {
+  animation: start-animation 0.3s 1 linear;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes start-animation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
