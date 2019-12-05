@@ -42,18 +42,18 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
-      {backgroundImageObj && (
-        <div
-          className="App__background"
-          style={{
-            background: `url(${backgroundImageObj.imgURL})`,
-            backgroundAttachment: "fixed",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover"
-          }}
-        />
-      )}
+    <div
+      className="App"
+      style={
+        backgroundImageObj && {
+          background: `url(${backgroundImageObj.imgURL})`,
+          backgroundAttachment: "fixed",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover"
+        }
+      }
+    >
+      {backgroundImageObj && <div className="App__shadow" />}
       <ProgressBars />
       {backgroundImageObj && (
         <a
