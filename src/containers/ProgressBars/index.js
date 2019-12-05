@@ -23,7 +23,7 @@ const getPercent = (value, totalValue) => {
   return ((value * 100) / totalValue).toFixed(4);
 };
 
-const ProgressBars = () => {
+const ProgressBars = ({ visible }) => {
   const [now, setNow] = useState(moment());
 
   const currentSecondsInYear = moment.duration(now.diff(startYear)).asSeconds();
@@ -54,7 +54,10 @@ const ProgressBars = () => {
   }, []);
 
   return (
-    <div className="ProgressBars">
+    <div
+      className="ProgressBars"
+      style={{ visibility: `${visible ? "visible" : "hidden"}` }}
+    >
       <div className="ProgressBars__container">
         <h1>Progress</h1>
         {/* {Object.keys(percentsArr).map((param, index) => {

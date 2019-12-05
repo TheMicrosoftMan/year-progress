@@ -6,6 +6,7 @@ import { utils } from "./utils";
 
 const App = () => {
   const [backgroundImageObj, setBackgroundImageObj] = useState(null);
+  const [isImageSee, setIsImageSee] = useState(false);
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -53,14 +54,27 @@ const App = () => {
         }
       }
     >
-      {backgroundImageObj && <div className="App__shadow" />}
-      <ProgressBars />
+      {backgroundImageObj && (
+        <div
+          className="App__background"
+          style={{
+            background: `url(${backgroundImageObj.imgURL})`,
+            backgroundAttachment: "fixed",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover"
+          }}
+        />
+      )}
+      {backgroundImageObj && !isImageSee && <div className="App__shadow" />}
+      <ProgressBars visible={!isImageSee} />
       {backgroundImageObj && (
         <a
           href={backgroundImageObj.copyrightlink}
           target="_blank"
           rel="noopener noreferrer"
           className="bing-img-desc"
+          onMouseEnter={() => setIsImageSee(true)}
+          onMouseLeave={() => setIsImageSee(false)}
         >
           <Bing />
           <p className="bing-img-desc_text">{backgroundImageObj.copyrights}</p>
