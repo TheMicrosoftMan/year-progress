@@ -19,13 +19,15 @@ const App = () => {
         const imgURL = responseJSON.images[0].url;
         const copyrights = responseJSON.images[0].copyright;
         const copyrightlink = responseJSON.images[0].copyrightlink;
+        const title = responseJSON.images[0].title;
 
         setBackgroundImageObj({
           imgURL: `https://www.bing.com${imgURL}`,
           copyrights,
-          copyrightlink
+          copyrightlink,
+          title
         });
-        utils.imageCache.toCache(imgURL, "image", copyrights, copyrightlink);
+        utils.imageCache.toCache(imgURL, copyrights, copyrightlink, title);
       } catch {
         // load image from cache
         const cachedImg = utils.imageCache.fromCache();
@@ -33,7 +35,8 @@ const App = () => {
           setBackgroundImageObj({
             imgURL: `https://www.bing.com${cachedImg.imgURL}`,
             copyrights: cachedImg.copyrights,
-            copyrightlink: cachedImg.copyrightlink
+            copyrightlink: cachedImg.copyrightlink,
+            title: cachedImg.title
           });
         }
       }
@@ -43,17 +46,7 @@ const App = () => {
   }, []);
 
   return (
-    <div
-      className="App"
-      style={
-        backgroundImageObj && {
-          background: `url(${backgroundImageObj.imgURL})`,
-          backgroundAttachment: "fixed",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover"
-        }
-      }
-    >
+    <div className="App">
       {backgroundImageObj && (
         <div
           className="App__background"
@@ -77,7 +70,11 @@ const App = () => {
           onMouseLeave={() => setIsImageSee(false)}
         >
           <Bing />
-          <p className="bing-img-desc_text">{backgroundImageObj.copyrights}</p>
+          <p className="bing-img-desc_text">
+            {backgroundImageObj && !isImageSee
+              ? backgroundImageObj.title
+              : backgroundImageObj.copyrights}
+          </p>
         </a>
       )}
     </div>
