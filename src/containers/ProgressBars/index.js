@@ -41,7 +41,7 @@ const ProgressBars = ({ visible }) => {
     Month: getPercent(currentSecondsInMonth, secondsInMonth),
     Day: getPercent(currentSecondsInDay, secondsInDay),
     Workday: getPercent(currentSecondsInWorkDay, workdayDuration),
-    Minutes: getPercent(currentSeconds, secondsInMinute)
+    // Minutes: getPercent(currentSeconds, secondsInMinute)
   };
 
   useEffect(() => {
