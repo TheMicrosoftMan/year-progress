@@ -12,7 +12,7 @@ const startDay = moment().startOf("day");
 const startMonth = moment().startOf("month");
 
 const startWorkDay = moment("10:00", "HH:mm");
-const endWorkDay = moment("17:00", "HH:mm");
+const endWorkDay = moment("18:00", "HH:mm");
 const workdayDuration = moment
   .duration(endWorkDay.diff(startWorkDay))
   .asSeconds();
